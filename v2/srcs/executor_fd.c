@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 18:37:15 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:42:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,25 +132,25 @@ static t_token	*make_generic(t_token *tok, t_cli *cli, t_here *heredoc)
 	return (temp);
 }
 
-static t_token	*get_last_redirect(t_type red, t_token *tok)
+static t_token	*get_last_redirect(t_type delim, t_token *tok)
 {
-	t_type	red2;
+	t_type	complement;
 
-	if (!red || !tok)
+	if (!delim || !tok)
 		return (NULL);
-	if (red == APPEND)
-		red2 = OVERWRITE;
-	if (red == OVERWRITE)
-		red2 = APPEND;
-	if (red == HEREDOC)
-		red2 = INPUT;
-	if (red == INPUT)
-		red2 = HEREDOC;
+	if (delim == APPEND)
+		complement = OVERWRITE;
+	if (delim == OVERWRITE)
+		complement = APPEND;
+	if (delim == HEREDOC)
+		complement = INPUT;
+	if (delim == INPUT)
+		complement = HEREDOC;
 	while (tok && tok->type != PIPE)
 		tok = tok->next;
 	while (tok && tok->type != PIPE)
 	{
-		if (tok->type == red || tok->type == red2)
+		if (tok->type == delim || tok->type == complement)
 			return (tok);
 		tok = tok->prev;
 	}
