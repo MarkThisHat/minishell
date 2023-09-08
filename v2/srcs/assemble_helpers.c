@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assemble_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:50:25 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/07 21:16:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/08 08:33:33 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,37 +68,4 @@ t_cli	*remove_cli(t_cli *cli)
 		temp->next = next;
 	clear_node(cli);
 	return (next);
-}
-
-t_token	*discard_tokens(t_token *token)
-{
-	t_token	*stt;
-	t_token	*end;
-
-	if (!token)
-		return (NULL);
-	stt = token;
-	end = token;
-	while (stt && stt->prev && stt->prev->type != PIPE)
-		stt = stt->prev;
-	token = stt;
-	while (end && end->type != PIPE)
-		end = end->next;
-	if (end)
-		end = end->next;
-	if (!stt->prev)
-		get_control()->tokens = end;
-	stt = stt->prev;
-	while (token != end)
-		token = remove_token(token);
-	if (end)
-		end->prev = stt;
-	if (stt)
-	{
-		if (!stt->next)
-			remove_token(stt);
-		else
-			stt->next = end;
-	}
-	return (end);
 }

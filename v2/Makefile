@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/09/07 15:22:33 by maalexan         ###   ########.fr        #
+#    Updated: 2023/09/08 09:38:27 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ FUN			:=	main.c \
 				env_utils.c \
 				exec_finder.c \
 				exec_run.c \
+				executor_fork.c \
 				executor.c \
 				input_utils.c \
 				input_validator.c \
@@ -54,14 +55,14 @@ FUN			:=	main.c \
 				prompt.c \
 				quick_sort.c \
 				signal_handler.c \
-				token_exp_var.c \
+				token_expander_var.c \
 				token_expander.c \
-				token_helper.c \
+				token_helpers.c \
 				token_list.c \
-				token_setter.c \
-				token_str.c \
+				token_populator.c \
+				token_string_handler.c \
 				token_utils.c \
-				token.c \
+				tokenization.c \
 				t_printers.c
 
 # Object files

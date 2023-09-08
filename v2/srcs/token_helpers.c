@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_helper.c                                     :+:      :+:    :+:   */
+/*   token_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:34:31 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/02 22:05:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:27:01 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,11 @@ char	*copy_str(char *input, int start, int len)
 	return (str);
 }
 
-t_token	*remove_token(t_token *node)
+void	get_quote(char *input, int *i)
 {
-	t_token	*prev;
-	t_token	*next;
+	char	quote;
 
-	if (!node)
-		return (NULL);
-	prev = node->prev;
-	next = node->next;
-	if (node->str)
-		free(node->str);
-	free(node);
-	if (prev)
-		prev->next = next;
-	if (next)
-		next->prev = prev;
-	if (!prev && !next)
-		get_control()->tokens = NULL;
-	return (next);
+	quote = input[(*i)++];
+	while (input[*i] && input[*i] != quote)
+		(*i)++;
 }
