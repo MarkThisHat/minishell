@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 20:49:48 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 10:30:59 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:44:19 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ int	has_heredoc(t_token	*tok)
 	return (0);
 }
 
-void	free_heredocs(t_here *doc, char closing)
+int	free_heredocs(t_here *doc, char closing)
 {
 	if (!doc)
-		return ;
+		return (0);
 	free_heredocs(doc->next, closing);
 	if (closing)
 		close(doc->fd);
 	free(doc);
+	if (closing)
+		return (0);
+	return (1);
 }

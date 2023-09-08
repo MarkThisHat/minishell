@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 11:33:42 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:45:43 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ int	executor_constructor(t_token *tok)
 	heredocs = get_heredocs(tok);
 	ctrl = get_control();
 	if (ctrl->status == 130)
-	{
-		free_heredocs(heredocs, 'c');
-		return (0);
-	}
+		return (free_heredocs(heredocs, 'c'));	
 	create_cli_list(tok, heredocs);
 	if (!set_fd(heredocs))
 		return (0);

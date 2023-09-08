@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 15:10:49 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:48:03 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ typedef enum e_type
 	EXEC,
 	ARGUMENT
 }	t_type;
-
-enum e_quote
-{
-	SINGLE = 1,
-	DOUBLE
-};
 
 /*	Lists
 */
@@ -189,7 +183,7 @@ t_cli	*remove_cli(t_cli *cli);
 t_token	*discard_tokens(t_token *token);
 t_here	*add_heredoc(t_here *head);
 t_here	*get_heredocs(t_token *tok);
-void	free_heredocs(t_here *doc, char closing);
+int		free_heredocs(t_here *doc, char closing);
 
 int		run_commands(void);
 int		mother_forker(t_cli *commands, pid_t *forked, int amount);
