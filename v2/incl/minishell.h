@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 11:36:41 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 15:10:49 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-
 
 # define OUT_OF_MEMORY 12
 # define DEFAULT 0
