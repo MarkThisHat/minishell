@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 10:34:41 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 10:45:03 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:48:57 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_cli	*change_fds(t_cli *before, t_cli *piped, t_cli *after)
 	return (after);
 }
 
-int	pipe_chain(t_cli *cli)
+static int	pipe_chain(t_cli *cli)
 {
 	t_cli	*piped;
 	t_cli	*after;
@@ -91,5 +91,7 @@ int	executor_constructor(t_token *tok)
 	control->commands = cli;
 	if (!set_fd(cli, tok, heredocs))
 		return (0);
-	return (set_cli(control->commands, control->tokens));
+	set_cli(control->commands, control->tokens);
+	pipe_chain(get_control()->commands);
+	return (1);
 }

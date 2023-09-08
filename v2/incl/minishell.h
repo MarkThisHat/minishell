@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 10:45:23 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:49:02 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ t_env	*validate_if_var_exist(t_env *list, char *arg);
 int		executor_constructor(t_token *tok);
 int		assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs);
 int		set_cli(t_cli *cli, t_token *tok);
-int		pipe_chain(t_cli *cli);
 
 t_token	*remove_token(t_token *node);
 int		count_args(t_token *node);

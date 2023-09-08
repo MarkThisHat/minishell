@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 13:29:53 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 10:44:31 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:49:07 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,5 @@ int	set_cli(t_cli *cli, t_token *tok)
 			cli = cli->next;
 		}
 	}
-	pipe_chain(get_control()->commands);
 	return (1);
 }
