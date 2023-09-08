@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 09:36:18 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:14:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,21 +179,21 @@ int		export_without_args(t_env *env);
 void	new_var(t_env *env, char *args);
 t_env	*validate_if_var_exist(t_env *list, char *arg);
 
-int		assemble_tokens(t_token *tok_nav);
+int		executor_constructor(t_token *tok_nav);
 
 t_token	*remove_token(t_token *node);
 int		count_args(t_token *node);
-int		count_nodes(t_token *tok);
+int		count_cli(t_token *tok);
 int		has_heredoc(t_token	*tok);
 
-t_cli	*make_new_cli(t_here *head);
+t_cli	*add_cli(t_here *head);
 t_cli	*remove_cli(t_cli *cli);
 t_token	*discard_tokens(t_token *token);
-t_here	*make_new_heredoc(t_here *head);
+t_here	*add_heredoc(t_here *head);
 t_here	*get_heredocs(t_token *tok);
 t_cli	*pipe_fd(t_cli *cli);
 void	free_heredocs(t_here *doc, char closing);
-int		assemble_fds(t_cli *cli, t_token *tok, t_here *heredocs);
+int		set_fd(t_cli *cli, t_token *tok, t_here *heredocs);
 
 int		run_commands(void);
 int		mother_forker(t_cli *commands, pid_t *forked, int amount);

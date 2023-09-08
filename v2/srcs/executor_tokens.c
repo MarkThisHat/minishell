@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assemble_tokens.c                                  :+:      :+:    :+:   */
+/*   executor_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 13:29:53 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/07 15:21:23 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:12:49 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	starts with an argument, a builtin or exec
 **	getting rid of the t_tokens as it goes
 */
-static char	**assemble_command_node(t_token *node)
+static char	**get_cli(t_token *node)
 {
 	int		i;
 	int		count;
@@ -88,13 +88,13 @@ static int	pipe_chain(t_cli *cli)
 	return (0);
 }
 
-static int	set_command_chain(t_cli *cli, t_token *tok)
+static int	set_cli(t_cli *cli, t_token *tok)
 {
 	while (cli && tok)
 	{
 		cli->type = tok->type;
 		if (tok->type > PIPE)
-			cli->args = assemble_command_node(tok);
+			cli->args = get_cli(tok);
 		tok = get_control()->tokens;
 		if (!tok)
 			break ;
@@ -110,7 +110,7 @@ static int	set_command_chain(t_cli *cli, t_token *tok)
 	return (1);
 }
 
-int	assemble_tokens(t_token *tok)
+int	executor_constructor(t_token *tok)
 {
 	t_cli	*cli;
 	t_ctrl	*control;
@@ -125,9 +125,9 @@ int	assemble_tokens(t_token *tok)
 		free_heredocs(heredocs, 'c');
 		return (0);
 	}
-	cli = make_new_cli(heredocs);
+	cli = add_cli(heredocs);
 	control->commands = cli;
-	if (!assemble_fds(cli, tok, heredocs))
+	if (!set_fd(cli, tok, heredocs))
 		return (0);
-	return (set_command_chain(control->commands, control->tokens));
+	return (set_cli(control->commands, control->tokens));
 }

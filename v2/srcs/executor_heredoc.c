@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assemble_heredoc.c                                 :+:      :+:    :+:   */
+/*   executor_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:40:35 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/02 14:50:22 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:10:05 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_here	*get_heredocs(t_token *tok)
 
 	if (!has_heredoc(tok))
 		return (NULL);
-	start = make_new_heredoc(NULL);
+	start = add_heredoc(NULL);
 	cursor = start;
 	while (tok)
 	{
@@ -103,7 +103,7 @@ t_here	*get_heredocs(t_token *tok)
 		}
 		else if (tok->type == PIPE && has_heredoc(tok))
 		{
-			cursor->next = make_new_heredoc(start);
+			cursor->next = add_heredoc(start);
 			cursor = cursor->next;
 		}
 		tok = tok->next;

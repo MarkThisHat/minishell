@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assemble_fds.c                                     :+:      :+:    :+:   */
+/*   executor_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:27:33 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/05 22:15:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:14:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,15 @@ static int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 	return (1);
 }
 
-int	assemble_fds(t_cli *cli, t_token *tok, t_here *heredocs)
+int	set_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 {
 	int		nodes;
 	int		assigned;
 
-	nodes = count_nodes(tok);
+	nodes = count_cli(tok);
 	while (--nodes)
 	{
-		cli->next = make_new_cli(heredocs);
+		cli->next = add_cli(heredocs);
 		cli = cli->next;
 	}
 	cli = get_control()->commands;

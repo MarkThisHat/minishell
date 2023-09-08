@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_printers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 15:16:35 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/07 15:17:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:08:13 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,3 +112,35 @@ void print_cli(void)
 		current = current->next;
 	}
 }
+
+/*
+static char	*print_type(t_token *tokens)
+{
+	if (tokens->type == PIPE)
+		return ("pipe");
+	else if (tokens->type == HEREDOC)
+		return ("heredoc");
+	else if (tokens->type == APPEND)
+		return ("append");
+	else if (tokens->type == INPUT)
+		return ("input");
+	else if (tokens->type == OVERWRITE)
+		return ("overwrite");
+	else if (tokens->type == BUILTIN)
+		return ("builtin");
+	else if (tokens->type == EXEC)
+		return ("exec");
+	else if (tokens->type == ARGUMENT)
+		return ("arg");
+	else
+		return ("");
+}
+
+static void	print_tokens(t_token *tokens)
+{
+	if (!tokens)
+		return ;
+	printf("str: %s | type: %s\n", tokens->str, print_type(tokens));
+	print_tokens(tokens->next);
+}
+*/

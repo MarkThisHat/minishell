@@ -176,7 +176,7 @@ void	heredocs_and_pipes(t_token *tok, t_cli *cli)
 	}
 }
 
-void	assemble_tokens(t_token *tok)
+void	executor_constructor(t_token *tok)
 {
 	t_cli	*cli;
 	t_here	*heredocs;
@@ -193,7 +193,7 @@ void	assemble_tokens(t_token *tok)
 //		print_token(tok);
 		cli->type = tok->type;
 		if (tok->type > PIPE)
-			cli->args = assemble_command_node(tok);
+			cli->args = get_cli(tok);
 		else if (tok->type < PIPE)
 			get_fd(tok, cli->fd);
 		else

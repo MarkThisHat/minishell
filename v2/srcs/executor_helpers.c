@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assemble_helpers.c                                 :+:      :+:    :+:   */
+/*   executor_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:50:25 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 08:33:33 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:10:05 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_here	*make_new_heredoc(t_here *head)
+t_here	*add_heredoc(t_here *head)
 {
 	t_here	*node;
 
@@ -26,7 +26,7 @@ t_here	*make_new_heredoc(t_here *head)
 	return (node);
 }
 
-t_cli	*make_new_cli(t_here *head)
+t_cli	*add_cli(t_here *head)
 {
 	t_cli	*node;
 
@@ -38,17 +38,6 @@ t_cli	*make_new_cli(t_here *head)
 	}
 	*node = (t_cli){0};
 	return (node);
-}
-
-static void	clear_node(t_cli *cli)
-{
-	if (cli->args)
-		clear_pbox(cli->args);
-	if (cli->fd[0] > 2)
-		close(cli->fd[0]);
-	if (cli->fd[1] > 2)
-		close(cli->fd[1]);
-	free(cli);
 }
 
 t_cli	*remove_cli(t_cli *cli)
@@ -66,6 +55,12 @@ t_cli	*remove_cli(t_cli *cli)
 		get_control()->commands = next;
 	else
 		temp->next = next;
-	clear_node(cli);
+	if (cli->args)
+		clear_pbox(cli->args);
+	if (cli->fd[0] > 2)
+		close(cli->fd[0]);
+	if (cli->fd[1] > 2)
+		close(cli->fd[1]);
+	free(cli);
 	return (next);
 }

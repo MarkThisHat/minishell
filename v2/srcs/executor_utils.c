@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assemble_utils.c                                   :+:      :+:    :+:   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 20:49:48 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/05 21:29:10 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:14:32 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	count_args(t_token *node)
 	return (count);
 }
 
-int	count_nodes(t_token *tok)
+int	count_cli(t_token *tok)
 {
 	int	count;
 
