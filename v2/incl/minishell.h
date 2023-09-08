@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 10:49:02 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 11:36:41 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
+typedef struct s_here
+{
+	int				fd;
+	struct s_here	*next;
+}					t_here;
+
 /*	Structs
 */
 typedef struct s_cli
@@ -104,13 +110,6 @@ typedef struct s_ctrl
 	char			**pbox;
 	int				status;
 }					t_ctrl;
-
-
-typedef struct s_here
-{
-	int				fd;
-	struct s_here	*next;
-}					t_here;
 
 /*	Functions
 */
@@ -184,8 +183,6 @@ int		assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs);
 int		set_cli(t_cli *cli, t_token *tok);
 
 t_token	*remove_token(t_token *node);
-int		count_args(t_token *node);
-int		count_cli(t_token *tok);
 int		has_heredoc(t_token	*tok);
 
 t_cli	*add_cli(t_here *head);
@@ -198,7 +195,7 @@ void	free_heredocs(t_here *doc, char closing);
 int		run_commands(void);
 int		mother_forker(t_cli *commands, pid_t *forked, int amount);
 void	execute_a_command(t_cli *commands);
-
+void	create_cli_list(t_token *tok, t_here *heredocs);
 
 //remove
 void	print_cli(void);

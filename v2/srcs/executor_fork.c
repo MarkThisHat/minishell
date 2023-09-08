@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   executor_fork.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 12:22:50 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/05 22:43:24 by maalexan         ###   ########.fr       */
+/*   Created: 2023/09/08 11:33:55 by inwagner          #+#    #+#             */
+/*   Updated: 2023/09/08 11:36:13 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	execute_a_command(t_cli *commands)
 		if (commands->args)
 			ft_putstr_fd(commands->args[0], STDERR_FILENO);
 		ft_putstr_fd(" not found\n", STDERR_FILENO);
-		if (get_control()->status == 126)	
+		if (get_control()->status == 126)
 			return ;
 		get_control()->status = 127;
 	}

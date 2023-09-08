@@ -5,26 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 10:34:41 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 10:48:57 by inwagner         ###   ########.fr       */
+/*   Created: 2023/09/08 11:33:40 by inwagner          #+#    #+#             */
+/*   Updated: 2023/09/08 11:33:42 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	set_fd(t_cli *cli, t_token *tok, t_here *heredocs)
+static int	set_fd(t_here *heredocs)
 {
-	int		nodes;
 	int		assigned;
+	t_ctrl	*ctrl;
 
-	nodes = count_cli(tok);
-	while (--nodes)
-	{
-		cli->next = add_cli(heredocs);
-		cli = cli->next;
-	}
-	cli = get_control()->commands;
-	assigned = assign_each_fd(cli, tok, heredocs);
+	ctrl = get_control();
+	assigned = assign_each_fd(ctrl->commands, ctrl->tokens, heredocs);
 	free_heredocs(heredocs, 0);
 	return (assigned);
 }
@@ -74,24 +68,22 @@ static int	pipe_chain(t_cli *cli)
 
 int	executor_constructor(t_token *tok)
 {
-	t_cli	*cli;
-	t_ctrl	*control;
+	t_ctrl	*ctrl;
 	t_here	*heredocs;
 
 	if (!tok)
 		return (0);
 	heredocs = get_heredocs(tok);
-	control = get_control();
-	if (control->status == 130)
+	ctrl = get_control();
+	if (ctrl->status == 130)
 	{
 		free_heredocs(heredocs, 'c');
 		return (0);
 	}
-	cli = add_cli(heredocs);
-	control->commands = cli;
-	if (!set_fd(cli, tok, heredocs))
+	create_cli_list(tok, heredocs);
+	if (!set_fd(heredocs))
 		return (0);
-	set_cli(control->commands, control->tokens);
+	set_cli(ctrl->commands, ctrl->tokens);
 	pipe_chain(get_control()->commands);
 	return (1);
 }

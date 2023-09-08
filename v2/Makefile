@@ -6,7 +6,7 @@
 #    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/09/08 10:38:46 by inwagner         ###   ########.fr        #
+#    Updated: 2023/09/08 11:06:25 by inwagner         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,13 +42,13 @@ FUN			:=	main.c \
 				env_utils.c \
 				exec_finder.c \
 				exec_run.c \
+				executor_cli.c \
 				executor_constructor.c \
 				executor_fd.c \
 				executor_fork.c \
 				executor_helpers.c \
 				executor_heredoc.c \
 				executor_list.c \
-				executor_tokens.c \
 				executor.c \
 				input_utils.c \
 				input_validator.c \

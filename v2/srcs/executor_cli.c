@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor_tokens.c                                  :+:      :+:    :+:   */
+/*   executor_cli.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/15 13:29:53 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 10:49:07 by inwagner         ###   ########.fr       */
+/*   Created: 2023/09/08 11:33:33 by inwagner          #+#    #+#             */
+/*   Updated: 2023/09/08 11:33:35 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_args(t_token *node)
-{
-	int	count;
-
-	count = 0;
-	while (node && node->type == ARGUMENT)
-	{
-		node = node->next;
-		count++;
-	}
-	return (count);
-}
-
-int	count_cli(t_token *tok)
+static int	count_cli(t_token *tok)
 {
 	int	count;
 
@@ -47,12 +34,35 @@ int	count_cli(t_token *tok)
 	return (count);
 }
 
-/*
-**	Builds the arguments for a node that
-**	starts with an argument, a builtin or exec
-**	getting rid of the t_tokens as it goes
-*/
-static char	**get_cli(t_token *node)
+void	create_cli_list(t_token *tok, t_here *heredocs)
+{
+	int		cli_len;
+	t_cli	*cli;
+
+	cli = add_cli(heredocs);
+	get_control()->commands = cli;
+	cli_len = count_cli(tok);
+	while (--cli_len)
+	{
+		cli->next = add_cli(heredocs);
+		cli = cli->next;
+	}
+}
+
+static int	count_args(t_token *node)
+{
+	int	count;
+
+	count = 0;
+	while (node && node->type != PIPE)
+	{
+		node = node->next;
+		count++;
+	}
+	return (count);
+}
+
+static char	**get_cli(t_token *token)
 {
 	int		i;
 	int		count;
@@ -60,22 +70,19 @@ static char	**get_cli(t_token *node)
 	t_token	*temp;
 
 	i = 0;
-	if (node->type == BUILTIN || node->type == EXEC)
-		count = count_args(node->next) + 2;
-	else
-		count = count_args(node) + 1;
+	count = count_args(token) + 1;
 	args = malloc(sizeof(char *) * count);
 	if (!args)
 		exit_program(OUT_OF_MEMORY);
 	while (i < count - 1)
 	{
-		args[i++] = node->str;
-		node->str = NULL;
-		temp = node->next;
-		remove_token(node);
-		node = temp;
+		args[i++] = token->str;
+		token->str = NULL;
+		temp = token->next;
+		remove_token(token);
+		token = temp;
 	}
-	get_control()->tokens = node;
+	get_control()->tokens = token;
 	args[i] = NULL;
 	return (args);
 }

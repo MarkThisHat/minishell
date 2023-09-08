@@ -6,7 +6,7 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:49:59 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 09:29:15 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 11:35:58 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ t_token	*discard_tokens(t_token *token)
 	return (end);
 }
 */
-
 
 t_token	*discard_tokens(t_token *token)
 {
