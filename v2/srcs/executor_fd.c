@@ -6,11 +6,24 @@
 /*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:27:33 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 10:14:32 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/08 10:39:53 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_cli	*pipe_fd(t_cli *cli)
+{
+	if (!cli)
+		return (NULL);
+	cli->type = PIPE;
+	if (pipe(cli->fd) < 0)
+	{
+		cli->fd[0] = -1;
+		cli->fd[1] = -1;
+	}
+	return (cli->next);
+}
 
 /*
 **	Makes sure the t_cli node has it's input and
@@ -66,7 +79,7 @@ static void	get_fd(t_token *tok, int *fd, t_here *heredocs)
 	}
 }
 
-static int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
+int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 {
 	while (tok)
 	{
@@ -98,21 +111,4 @@ static int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 		tok = tok->next;
 	}
 	return (1);
-}
-
-int	set_fd(t_cli *cli, t_token *tok, t_here *heredocs)
-{
-	int		nodes;
-	int		assigned;
-
-	nodes = count_cli(tok);
-	while (--nodes)
-	{
-		cli->next = add_cli(heredocs);
-		cli = cli->next;
-	}
-	cli = get_control()->commands;
-	assigned = assign_each_fd(cli, tok, heredocs);
-	free_heredocs(heredocs, 0);
-	return (assigned);
 }
