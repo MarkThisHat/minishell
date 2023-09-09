@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 19:42:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/08 21:05:53 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,23 +115,6 @@ int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 }
 */
 
-static t_token	*make_generic(t_token *tok, t_cli *cli, t_here *heredoc)
-{
-	t_token	*temp;
-
-	if (!tok)
-		return (NULL);
-	if (!tok->prev && tok->next)
-		temp = tok->next->next;
-	else
-		temp = tok->prev;
-	if (cli->fd[0] > -1 && cli->fd[1] > -1)
-		prepare_fd(tok, cli->fd, heredoc);
-	remove_token(tok->next);
-	remove_token(tok);
-	return (temp);
-}
-
 static t_token	*get_last_redirect(t_type delim, t_token *tok)
 {
 	t_type	complement;
@@ -157,12 +140,42 @@ static t_token	*get_last_redirect(t_type delim, t_token *tok)
 	return (NULL);
 }
 
-static	void	make_heredoc(t_token *tok, t_cli *cli, t_here **hdoc)
+static int	deal_with_it(int fd, t_token *tok, t_cli *cli)
 {
-	heredoc = heredoc->next;
+	t_token	*last;
+
+	if (!tok || !fd)
+		return (0);
+	last = get_last_redirect(tok->type, tok);
+	if (last != tok && tok->type != HEREDOC)
+		close(fd);
+	else if (last == tok && cli->heredoc)
+		free(cli->heredoc)
+	return (0);
 }
 
-static int	fill_fd(t_cli *cli, t_token *tok, t_here *heredocs)
+static t_token	*make_redirect(t_token *tok, t_cli *cli)
+{
+	t_token	*temp;
+
+	if (!tok)
+		return (NULL);
+	if (!tok->prev && tok->next)
+		temp = tok->next->next;
+	else
+		temp = tok->prev;
+	if (cli->fd[0] > 0 && tok->type == INPUT || tok->type == HEREDOC)
+		cli->fd[0] = deal_with_it(cli->fd[0], tok);
+	if (cli->fd[1] > 0 && tok->type == APPEND || tok->type == OVERWRITE)
+		cli->fd[0] = deal_with_it(cli->fd[1], tok);
+	if (cli->fd[0] > -1 && cli->fd[1] > -1)
+		prepare_fd(tok, cli->fd);
+	remove_token(tok->next);
+	remove_token(tok);
+	return (temp);
+}
+
+static int	fill_fd(t_cli *cli, t_token *tok)
 {
 	if (!cli || !tok)
 		return (0);
@@ -172,17 +185,45 @@ static int	fill_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 			tok = tok->next;
 		if (tok)
 		{
-			if (tok->type == HEREDOC)
-				make_heredoc();
-			else if (tok->type == PIPE)
+			if (tok->type == PIPE)
 				cli = cli->next->next;
 			else
-				make_generic();
+				tok = make_redirect(cli, tok, heredoc);
 		}
+	}
+}
+
+static int	cli_has_hdoc(t_token *tok)
+{
+	while (tok && tok->type != PIPE)
+	{
+		if (tok->type == HEREDOC)
+			return (1);
+		tok = tok->next;
+	}
+	return (0);
+}
+
+static void	link_hdoc(t_cli *cli, t_token *tok, t_here *heredocs)
+{
+	while (tok && cli)
+	{
+		if (cli_has_hdoc(tok))
+		{
+			cli->heredoc = heredocs;
+			heredoc = heredocs->next;
+		}
+		if (cli->next && cli->next->next)
+			cli = cli->next->next;
+		while (tok && tok->type != PIPE)
+			tok = tok->next;
+		if (tok)
+			tok = tok->next;
 	}
 }
 
 int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 {
-	fill_fd(cli, tok, heredocs);
+	link_hdoc(cli, tok, heredocs);
+	fill_fd(cli, tok);
 }
