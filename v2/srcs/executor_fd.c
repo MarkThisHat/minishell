@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   executor_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 21:05:53 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/09 16:39:49 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static t_cli	*pipe_fd(t_cli *cli)
 {
 	if (!cli)
@@ -24,7 +24,7 @@ static t_cli	*pipe_fd(t_cli *cli)
 	}
 	return (cli->next);
 }
-
+*/
 /*
 **	Makes sure the t_cli node has it's input and
 **	output file descriptor properly set
@@ -53,7 +53,7 @@ static int	prepare_fd(t_token *tok, int *fd, t_here *heredocs)
 	}
 	return (0);
 }
-
+/*
 static void	get_fd(t_token *tok, int *fd, t_here *heredocs)
 {
 	int		redirector;
@@ -77,7 +77,7 @@ static void	get_fd(t_token *tok, int *fd, t_here *heredocs)
 			fd[1] = -1;
 	}
 }
-/*
+
 int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 {
 	print_cli();
@@ -150,7 +150,7 @@ static int	deal_with_it(int fd, t_token *tok, t_cli *cli)
 	if (last != tok && tok->type != HEREDOC)
 		close(fd);
 	else if (last == tok && cli->heredoc)
-		free(cli->heredoc)
+		free(cli->heredoc);
 	return (0);
 }
 
@@ -164,12 +164,12 @@ static t_token	*make_redirect(t_token *tok, t_cli *cli)
 		temp = tok->next->next;
 	else
 		temp = tok->prev;
-	if (cli->fd[0] > 0 && tok->type == INPUT || tok->type == HEREDOC)
-		cli->fd[0] = deal_with_it(cli->fd[0], tok);
-	if (cli->fd[1] > 0 && tok->type == APPEND || tok->type == OVERWRITE)
-		cli->fd[0] = deal_with_it(cli->fd[1], tok);
+	if (cli->fd[0] > 0 && (tok->type == INPUT || tok->type == HEREDOC))
+		cli->fd[0] = deal_with_it(cli->fd[0], tok, cli);
+	if (cli->fd[1] > 0 && (tok->type == APPEND || tok->type == OVERWRITE))
+		cli->fd[0] = deal_with_it(cli->fd[1], tok, cli);
 	if (cli->fd[0] > -1 && cli->fd[1] > -1)
-		prepare_fd(tok, cli->fd);
+		prepare_fd(tok, cli->fd, cli->heredoc);
 	remove_token(tok->next);
 	remove_token(tok);
 	return (temp);
@@ -188,9 +188,10 @@ static int	fill_fd(t_cli *cli, t_token *tok)
 			if (tok->type == PIPE)
 				cli = cli->next->next;
 			else
-				tok = make_redirect(cli, tok, heredoc);
+				tok = make_redirect(tok, cli);
 		}
 	}
+	return (1);
 }
 
 static int	cli_has_hdoc(t_token *tok)
@@ -211,7 +212,7 @@ static void	link_hdoc(t_cli *cli, t_token *tok, t_here *heredocs)
 		if (cli_has_hdoc(tok))
 		{
 			cli->heredoc = heredocs;
-			heredoc = heredocs->next;
+			heredocs = heredocs->next;
 		}
 		if (cli->next && cli->next->next)
 			cli = cli->next->next;
@@ -225,5 +226,9 @@ static void	link_hdoc(t_cli *cli, t_token *tok, t_here *heredocs)
 int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 {
 	link_hdoc(cli, tok, heredocs);
+	print_cli();
+	print_token(tok);
+	exit_program(0);
 	fill_fd(cli, tok);
+	return (1);
 }

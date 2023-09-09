@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_printers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 15:16:35 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 10:08:13 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/09 16:42:45 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void print_cli(void)
 		if (current->args)
 			print_args(current->args);
 		printf("fd0 is %i and fd1 is %i\n", current->fd[0], current->fd[1]);
+		if (current->heredoc)
+			printf("heredoc is fd %i\n", current->heredoc->fd);
 		printf("type %s\n", print_type(current->type));
 		current = current->next;
 	}
