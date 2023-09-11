@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:40:35 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/10 23:23:02 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/10 23:37:21 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,8 @@ static void	prepare_here_doc(char *delim, int *fd, t_here *head)
 }
 */
 
-static int	fork_heredoc(char *delim)
+static int	fork_heredoc(char *delim, int *fd)
 {
-	int		fd[2];
 	int		wstatus;
 	pid_t	forked;
 
@@ -149,7 +148,9 @@ int	get_heredoc(t_token *tok, t_cli *cli)
 		{
 			if (cli->hdoc > 0)
 				close(cli->hdoc);
-			cli->hdoc = fork_heredoc(tok->next->str);
+			cli->hdoc = fork_heredoc(tok->next->str, cli->fd);
+			cli->fd[0] = 0;
+			cli->fd[1] = 0;
 			if (!validate_hdoc(cli->hdoc))
 				return (0);
 		}
