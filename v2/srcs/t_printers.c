@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 15:16:35 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/09 16:42:45 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/10 23:12:54 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void print_cli(void)
 		if (current->args)
 			print_args(current->args);
 		printf("fd0 is %i and fd1 is %i\n", current->fd[0], current->fd[1]);
-		if (current->heredoc)
-			printf("heredoc is fd %i\n", current->heredoc->fd);
+		if (current->hdoc)
+			printf("heredoc is fd %i\n", current->hdoc);
 		printf("type %s\n", print_type(current->type));
 		current = current->next;
 	}

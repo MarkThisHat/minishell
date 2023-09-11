@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/09 16:39:49 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/10 23:12:10 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_cli	*pipe_fd(t_cli *cli)
 **	Makes sure the t_cli node has it's input and
 **	output file descriptor properly set
 */
-static int	prepare_fd(t_token *tok, int *fd, t_here *heredocs)
+int	prepare_fd(t_token *tok, int *fd, t_here *heredocs)
 {
 	t_token	*next;
 	char	*file;
@@ -113,7 +113,7 @@ int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 	}
 	return (1);
 }
-*/
+
 
 static t_token	*get_last_redirect(t_type delim, t_token *tok)
 {
@@ -232,3 +232,4 @@ int	assign_each_fd(t_cli *cli, t_token *tok, t_here *heredocs)
 	fill_fd(cli, tok);
 	return (1);
 }
+*/

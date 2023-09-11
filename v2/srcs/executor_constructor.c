@@ -3,84 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   executor_constructor.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 15:45:43 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/10 22:40:09 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	set_fd(t_here *heredocs)
+static int	build_cli(int count)
 {
-	int		assigned;
-	t_ctrl	*ctrl;
+	t_cli	*cli;
 
-	ctrl = get_control();
-	assigned = assign_each_fd(ctrl->commands, ctrl->tokens, heredocs);
-	free_heredocs(heredocs, 0);
-	return (assigned);
+	if (!count)
+		return (0);
+	cli = malloc(sizeof(t_cli));
+	if (!cli)
+		return (-1);
+	*cli = (t_cli){0};
+	get_control()->commands = cli;
+	while (--count)
+	{
+		cli->next = malloc(sizeof(t_cli));
+		cli = cli->next;
+		if (!cli)
+			return (-1);
+		*cli = (t_cli){0};
+	}
+	return (1);
 }
 
-static t_cli	*change_fds(t_cli *before, t_cli *piped, t_cli *after)
+static int	count_cli(t_token *tok)
 {
-	if (!before || !piped || !after)
-		return (NULL);
-	if (before->fd[1] > 2 || after->fd[0] > 2)
-	{
-		close(piped->fd[0]);
-		close(piped->fd[1]);
-	}
-	else
-	{
-		before->fd[1] = piped->fd[1];
-		after->fd[0] = piped->fd[0];
-	}
-	free(piped);
-	before->next = after;
-	return (after);
-}
+	int	count;
 
-static int	pipe_chain(t_cli *cli)
-{
-	t_cli	*piped;
-	t_cli	*after;
-
-	piped = NULL;
-	after = NULL;
-	while (cli)
+	if (!tok)
+		return (0);
+	count = 1;
+	while (tok)
 	{
-		if (cli->next && cli->next->type == PIPE)
-		{
-			piped = cli->next;
-			if (piped->next && piped->next->type != PIPE)
-				after = piped->next;
-		}
-		if (!piped && !after)
-			return (1);
-		cli = change_fds(cli, piped, after);
-		piped = NULL;
-		after = NULL;
+		if (tok->type == PIPE)
+			count++;
+		tok = tok->next;
 	}
-	return (0);
+	return (count);
 }
 
 int	executor_constructor(t_token *tok)
 {
-	t_ctrl	*ctrl;
-	t_here	*heredocs;
+	int		count;
 
 	if (!tok)
 		return (0);
-	heredocs = get_heredocs(tok);
-	ctrl = get_control();
-	if (ctrl->status == 130)
-		return (free_heredocs(heredocs, 'c'));	
-	create_cli_list(tok, heredocs);
-	if (!set_fd(heredocs))
+	count = count_cli(tok);
+	if (build_cli(count) < 0)
+		exit_program(OUT_OF_MEMORY);
+	if (!get_heredoc(tok, get_control()->commands))
 		return (0);
-	set_cli(ctrl->commands, ctrl->tokens);
-	pipe_chain(get_control()->commands);
+	print_cli();
+	exit_program(0);
 	return (1);
 }
