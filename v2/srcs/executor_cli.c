@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   executor_cli.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:33 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 11:33:35 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/11 22:17:38 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static int	count_cli(t_token *tok)
 {
 	int	count;
@@ -33,7 +33,8 @@ static int	count_cli(t_token *tok)
 	}
 	return (count);
 }
-
+*/
+/*
 void	create_cli_list(t_token *tok, t_here *heredocs)
 {
 	int		cli_len;
@@ -48,7 +49,7 @@ void	create_cli_list(t_token *tok, t_here *heredocs)
 		cli = cli->next;
 	}
 }
-
+*/
 static int	count_args(t_token *node)
 {
 	int	count;
@@ -86,7 +87,7 @@ static char	**get_cli(t_token *token)
 	args[i] = NULL;
 	return (args);
 }
-
+/*
 int	set_cli(t_cli *cli, t_token *tok)
 {
 	while (cli && tok)
@@ -107,3 +108,4 @@ int	set_cli(t_cli *cli, t_token *tok)
 	}
 	return (1);
 }
+*/

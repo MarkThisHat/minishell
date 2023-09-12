@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/10 23:12:10 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/11 22:18:01 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_cli	*pipe_fd(t_cli *cli)
 /*
 **	Makes sure the t_cli node has it's input and
 **	output file descriptor properly set
-*/
+*//*
 int	prepare_fd(t_token *tok, int *fd, t_here *heredocs)
 {
 	t_token	*next;
@@ -52,7 +52,7 @@ int	prepare_fd(t_token *tok, int *fd, t_here *heredocs)
 		return (-1);
 	}
 	return (0);
-}
+}*/
 /*
 static void	get_fd(t_token *tok, int *fd, t_here *heredocs)
 {

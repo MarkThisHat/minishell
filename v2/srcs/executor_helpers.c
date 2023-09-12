@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 20:49:48 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 15:44:19 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/11 22:18:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	has_heredoc(t_token	*tok)
 	}
 	return (0);
 }
-
+/*
 int	free_heredocs(t_here *doc, char closing)
 {
 	if (!doc)
@@ -35,3 +35,4 @@ int	free_heredocs(t_here *doc, char closing)
 		return (0);
 	return (1);
 }
+*/
