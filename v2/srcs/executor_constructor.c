@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 14:37:04 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 16:50:49 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_cli	*define_final_fd(t_cli *cli)
 {
 	if (!cli)
 		return (NULL);
-	if (cli->fd[0] != cli->hdoc)
+	if (cli->hdoc > 0 && cli->fd[0] != cli->hdoc)
 		close(cli->hdoc);
 	cli->hdoc = 0;
 	return (cli->next);
@@ -148,19 +148,17 @@ static int	count_cli(t_token *tok)
 int	executor_constructor(t_token *tok)
 {
 	int		count;
+	t_ctrl	*ctrl;
 
 	if (!tok)
 		return (0);
+	ctrl = get_control();
 	count = count_cli(tok);
 	if (build_cli(count) < 0)
 		exit_program(OUT_OF_MEMORY);
-	if (!get_heredoc(tok, get_control()->commands))
+	if (!get_heredoc(tok, ctrl->commands))
 		return (0);
-	print_cli();
-	print_token(get_control()->tokens);
-	set_fd(tok, get_control()->commands);
-	print_cli();
-	print_token(get_control()->tokens);
-	exit_program(0);
+	set_fd(ctrl->tokens, ctrl->commands);
+	set_cli(ctrl->tokens, ctrl->commands);
 	return (1);
 }

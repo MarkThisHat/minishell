@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:33 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 14:35:37 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:05:02 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	count_args(t_token *node)
 	return (count);
 }
 
-char	**get_cli(t_token *token)
+static char	**get_cli(t_token *token)
 {
 	int		i;
 	int		count;
@@ -87,19 +87,20 @@ char	**get_cli(t_token *token)
 	args[i] = NULL;
 	return (args);
 }
-/*
-int	set_cli(t_cli *cli, t_token *tok)
+
+int	set_cli(t_token *tok, t_cli *cli)
 {
 	while (cli && tok)
 	{
-		cli->type = tok->type;
 		if (tok->type > PIPE)
+		{
+			cli->type = tok->type;
 			cli->args = get_cli(tok);
+		}
 		tok = get_control()->tokens;
 		if (!tok)
 			break ;
-		cli = cli->next;
-		if (cli->type == PIPE)
+		if (tok->type == PIPE)
 		{
 			tok = tok->next;
 			remove_token(tok->prev);
@@ -108,4 +109,3 @@ int	set_cli(t_cli *cli, t_token *tok)
 	}
 	return (1);
 }
-*/
