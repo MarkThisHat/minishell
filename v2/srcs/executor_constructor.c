@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 16:50:49 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:06:43 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,46 @@ static int	count_cli(t_token *tok)
 	return (count);
 }
 
+static void	remove_invalid_cli(t_cli *cli)
+{
+	while (cli)
+	{
+		if (cli->fd[0] < 0 || cli->fd[1] < 0)
+			cli = remove_cli(cli);
+		else
+			cli = cli->next;
+	}
+}
+
+static int	set_pipes(t_cli *cli)
+{
+	int		fd[2];
+	t_cli	*next;
+
+	next = cli->next;
+	while (next)
+	{
+		fd[0] = 0;
+		fd[1] = 0;
+		if (!next->fd[0] && !cli->fd[1])
+		{
+			if (pipe(fd) < 0)
+			{
+				perror("pipe");
+				return (-1);
+			}
+			else
+			{
+				next->fd[0] = fd[0];
+				cli->fd[1] = fd[1];
+			}
+		}
+		cli = next;
+		next = next->next;
+	}
+	return (1);
+}
+
 int	executor_constructor(t_token *tok)
 {
 	int		count;
@@ -160,5 +200,8 @@ int	executor_constructor(t_token *tok)
 		return (0);
 	set_fd(ctrl->tokens, ctrl->commands);
 	set_cli(ctrl->tokens, ctrl->commands);
+	remove_invalid_cli(ctrl->commands);
+	if (!ctrl->commands || set_pipes(ctrl->commands) < 0)
+		return (0);
 	return (1);
 }

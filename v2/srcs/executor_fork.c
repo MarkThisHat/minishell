@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_fork.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:55 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/08 11:36:13 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:42:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,7 @@ void	execute_a_command(t_cli *commands)
 		call_execve(commands->args, get_control()->env);
 	else
 	{
-		ft_putstr_fd("Command ", STDERR_FILENO);
-		if (commands->args)
-			ft_putstr_fd(commands->args[0], STDERR_FILENO);
-		ft_putstr_fd(" not found\n", STDERR_FILENO);
+		ft_putstr_fd(" command not found\n", STDERR_FILENO);
 		if (get_control()->status == 126)
 			return ;
 		get_control()->status = 127;
