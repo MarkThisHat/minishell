@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 10:25:37 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/09 16:56:12 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:21:41 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	clear_env(t_env *list)
 	free(list);
 }
 
-void clear_cli(t_cli *cli)
+void	clear_cli(t_cli *cli)
 {
 	t_cli	*next_cli;
 

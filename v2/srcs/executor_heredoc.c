@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:40:35 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/10 23:37:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:15:22 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,6 @@ static void	here_doc(char *delim, int *fd)
 	exit_program(0);
 }
 
-/*
-static void	prepare_here_doc(char *delim, int *fd, t_here *head)
-{
-	t_cli	*cli;
-
-	free_heredocs(head, 0);
-	cli = malloc(sizeof(t_cli));
-	if (!cli)
-		exit_program(OUT_OF_MEMORY);
-	*cli = (t_cli){0};
-	cli->args = malloc(sizeof(char *) * 2);
-	if (!cli->args)
-		exit_program(OUT_OF_MEMORY);
-	cli->args[0] = NULL;
-	cli->args[1] = NULL;
-	cli->fd[0] = fd[0];
-	cli->fd[1] = fd[1];
-	get_control()->commands = cli;
-	set_signals(HEREDOC);
-	here_doc(delim, cli->args[0], cli->fd);
-}
-*/
-
 static int	fork_heredoc(char *delim, int *fd)
 {
 	int		wstatus;
@@ -92,37 +69,8 @@ static int	fork_heredoc(char *delim, int *fd)
 	set_signals(ACTIVE);
 	return (fd[0]);
 }
-/*
-t_here	*get_heredocs(t_token *tok)
-{
-	t_here	*start;
-	t_here	*cursor;
 
-	if (!has_heredoc(tok))
-		return (NULL);
-	start = add_heredoc(NULL);
-	cursor = start;
-	while (tok)
-	{
-		if (tok->type == HEREDOC && tok->next)
-		{
-			if (cursor->fd)
-				close(cursor->fd);
-			cursor->fd = fork_heredoc(tok->next->str, start);
-			if (get_control()->status == 130)
-				return (start);
-		}
-		else if (tok->type == PIPE && has_heredoc(tok))
-		{
-			cursor->next = add_heredoc(start);
-			cursor = cursor->next;
-		}
-		tok = tok->next;
-	}
-	return (start);
-}
-*/
-int	validate_hdoc(int fd)
+static int	validate_hdoc(int fd)
 {
 	if (fd < 0)
 	{

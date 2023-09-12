@@ -6,50 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:33 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 15:05:02 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:13:07 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-static int	count_cli(t_token *tok)
-{
-	int	count;
 
-	count = 0;
-	while (tok)
-	{
-		if (tok->type > PIPE)
-		{
-			count++;
-			while (tok && tok->type != PIPE)
-				tok = tok->next;
-		}
-		else if (tok->type == PIPE)
-		{
-			count++;
-			tok = tok->next;
-		}
-	}
-	return (count);
-}
-*/
-/*
-void	create_cli_list(t_token *tok, t_here *heredocs)
-{
-	int		cli_len;
-	t_cli	*cli;
-
-	cli = add_cli(heredocs);
-	get_control()->commands = cli;
-	cli_len = count_cli(tok);
-	while (--cli_len)
-	{
-		cli->next = add_cli(heredocs);
-		cli = cli->next;
-	}
-}
-*/
 static int	count_args(t_token *node)
 {
 	int	count;

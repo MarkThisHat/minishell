@@ -6,40 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:50:25 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/12 14:47:20 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:18:53 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-t_here	*add_heredoc(t_here *head)
-{
-	t_here	*node;
 
-	node = malloc(sizeof(t_here));
-	if (!node)
-	{
-		free_heredocs(head, 'c');
-		exit_program(OUT_OF_MEMORY);
-	}
-	*node = (t_here){0};
-	return (node);
-}
-
-t_cli	*add_cli(t_here *head)
-{
-	t_cli	*node;
-
-	node = malloc(sizeof(t_cli));
-	if (!node)
-	{
-		free_heredocs(head, 'c');
-		exit_program(OUT_OF_MEMORY);
-	}
-	*node = (t_cli){0};
-	return (node);
-}
-*/
 t_cli	*remove_cli(t_cli *cli)
 {
 	t_cli	*next;
@@ -63,4 +35,15 @@ t_cli	*remove_cli(t_cli *cli)
 		close(cli->fd[1]);
 	free(cli);
 	return (next);
+}
+
+void	remove_invalid_cli(t_cli *cli)
+{
+	while (cli)
+	{
+		if (cli->fd[0] < 0 || cli->fd[1] < 0)
+			cli = remove_cli(cli);
+		else
+			cli = cli->next;
+	}
 }
