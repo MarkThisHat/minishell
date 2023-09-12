@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   executor_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:50:25 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/08 11:34:11 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:47:20 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 t_here	*add_heredoc(t_here *head)
 {
 	t_here	*node;
@@ -39,7 +39,7 @@ t_cli	*add_cli(t_here *head)
 	*node = (t_cli){0};
 	return (node);
 }
-
+*/
 t_cli	*remove_cli(t_cli *cli)
 {
 	t_cli	*next;

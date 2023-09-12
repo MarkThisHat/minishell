@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:33 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/11 22:17:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:35:37 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	count_args(t_token *node)
 	return (count);
 }
 
-static char	**get_cli(t_token *token)
+char	**get_cli(t_token *token)
 {
 	int		i;
 	int		count;

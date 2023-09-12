@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/11 22:32:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:37:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_cli	*define_final_fd(t_cli *cli)
 	if (!cli)
 		return (NULL);
 	if (cli->fd[0] != cli->hdoc)
-		close(cli->hdoc)
+		close(cli->hdoc);
 	cli->hdoc = 0;
 	return (cli->next);
 }
@@ -68,14 +68,27 @@ static void	close_unused_fd(int *fd, int heredoc, t_type type)
 	}
 }
 
-static t_token	*get_next_tok(tok)
+static t_token	*get_next_tok(t_token *tok)
 {
 	t_token	*temp;
 
-	return (NULL);
+	if (!tok)
+		return (NULL);
+	if (!tok->prev && tok->next)
+		temp = tok->next->next;
+	else
+		temp = tok->prev;
+	remove_token(tok->next);
+	remove_token(tok);
+	tok = temp;
+	while (temp && temp->prev)
+		temp = temp->prev;
+	if (temp)
+		get_control()->tokens = temp;
+	return (tok);
 }
 
-static int	set_fd(t_token *tok, t_cli *cli)
+static void	set_fd(t_token *tok, t_cli *cli)
 {
 	while (cli)
 	{
@@ -143,8 +156,11 @@ int	executor_constructor(t_token *tok)
 		exit_program(OUT_OF_MEMORY);
 	if (!get_heredoc(tok, get_control()->commands))
 		return (0);
+	print_cli();
+	print_token(get_control()->tokens);
 	set_fd(tok, get_control()->commands);
 	print_cli();
+	print_token(get_control()->tokens);
 	exit_program(0);
 	return (1);
 }
