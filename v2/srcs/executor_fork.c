@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:55 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 20:40:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 21:47:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,19 @@ static void	fork_command(t_cli *commands, pid_t *forked)
 	if (commands->fd[0] > 0)
 	{
 		if (dup2(commands->fd[0], STDIN_FILENO) < 0)
-			exit_program(-1);
+		{
+			free(forked);
+			exit_program(1);
+		}
 		close(commands->fd[0]);
 	}
 	if (commands->fd[1])
 	{
 		if (dup2(commands->fd[1], STDOUT_FILENO) < 0)
-			exit_program(-1);
+		{
+			free(forked);
+			exit_program(1);
+		}
 		close(commands->fd[1]);
 	}
 	free(forked);
