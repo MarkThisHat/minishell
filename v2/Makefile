@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/09/08 11:06:25 by inwagner         ###   ########.fr        #
+#    Updated: 2023/09/12 20:39:18 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ FUN			:=	main.c \
 				executor_constructor.c \
 				executor_fd.c \
 				executor_fork.c \
-				executor_helpers.c \
 				executor_heredoc.c \
 				executor_list.c \
 				executor.c \

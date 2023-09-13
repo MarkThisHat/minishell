@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:40 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 20:19:40 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 21:32:35 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	executor_constructor(t_token *tok)
 		return (0);
 	set_fd(ctrl->tokens, ctrl->commands);
 	set_cli(ctrl->tokens, ctrl->commands);
-	remove_invalid_cli(ctrl->commands);
 	if (!ctrl->commands || set_pipes(ctrl->commands) < 0)
 		return (0);
 	return (1);

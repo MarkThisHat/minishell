@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:50:25 by maalexan          #+#    #+#             */
-/*   Updated: 2023/09/12 20:18:53 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 21:32:25 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,4 @@ t_cli	*remove_cli(t_cli *cli)
 		close(cli->fd[1]);
 	free(cli);
 	return (next);
-}
-
-void	remove_invalid_cli(t_cli *cli)
-{
-	while (cli)
-	{
-		if (cli->fd[0] < 0 || cli->fd[1] < 0)
-			cli = remove_cli(cli);
-		else
-			cli = cli->next;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 21:09:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 20:20:17 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:59:55 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ t_token	*discard_tokens(t_token *token);
 t_here	*add_heredoc(t_here *head);
 t_here	*get_heredocs(t_token *tok);
 int		free_heredocs(t_here *doc, char closing);
-void	remove_invalid_cli(t_cli *cli);
+//void	remove_invalid_cli(t_cli *cli);
 
 int		run_commands(void);
 int		mother_forker(t_cli *commands, pid_t *forked, int amount);

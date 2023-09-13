@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:55 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 19:42:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:40:38 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,4 @@ int	mother_forker(t_cli *commands, pid_t *forked, int amount)
 	}
 	wait_commands(forked, amount);
 	return (i);
-}
-
-void	execute_a_command(t_cli *commands)
-{
-	if (commands->type == BUILTIN)
-		call_builtin(commands);
-	else if (commands->type == EXEC)
-		call_execve(commands->args, get_control()->env);
-	else
-	{
-		ft_putstr_fd(" command not found\n", STDERR_FILENO);
-		if (get_control()->status == 126)
-			return ;
-		get_control()->status = 127;
-	}
 }

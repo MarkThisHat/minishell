@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 11:33:47 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 20:20:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 21:24:35 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	set_fd(t_token *tok, t_cli *cli)
 		else if (tok->type < PIPE)
 		{
 			close_unused_fd(cli->fd, cli->hdoc, tok->type);
-			treat_fd(tok, cli->fd, cli->hdoc);
+			if (cli->fd[0] != -1 && cli->fd[1] != -1)
+				treat_fd(tok, cli->fd, cli->hdoc);
 			tok = get_next_tok(tok);
 		}
 		if (tok)
