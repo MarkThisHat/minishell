@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 09:31:26 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/12 21:32:08 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/09/12 21:36:21 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	run_commands(void)
 	commands = get_control()->commands;
 	if (!commands)
 		return (0);
-	if (commands->next || commands->fd[0] || commands->fd[1])
+	if (commands->next || commands->fd[0] > 0 || commands->fd[1] > 0)
 	{
 		amount = count_commands(commands);
 		forks = malloc(sizeof(pid_t) * amount);
