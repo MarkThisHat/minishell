@@ -21,9 +21,9 @@ static int	validate_start_pipe(char *input)
 	j = 0;
 	while (input[j] && input[j + 1])
 		j++;
-	while (ft_isblank(input[i]))
+	while (input[i] && ft_isblank(input[i]))
 		i++;
-	while (ft_isblank(input[j]))
+	while (j && input[j] && ft_isblank(input[j]))
 		j--;
 	if (!is_pipe(input[i]) && !is_pipe(input[j]))
 		return (0);
