@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: inwagner <inwagner@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: inwagner <inwagner@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 21:02:09 by inwagner          #+#    #+#             */
-/*   Updated: 2023/09/16 10:54:58 by inwagner         ###   ########.fr       */
+/*   Updated: 2023/09/16 14:28:28 by inwagner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*validate_if_var_exist(t_env *list, char *arg)
+static t_env	*validate_if_var_exist(t_env *list, char *arg)
 {
 	int	len;
 
@@ -66,7 +66,7 @@ int	b_export(t_env *env, char **args)
 	{
 		if (validate_var(*args))
 		{
-			ft_putstr_fd("Minishell: not a valid identifier\n", STDERR_FILENO);
+			ft_putstr_fd("msh: not a valid identifier\n", STDERR_FILENO);
 			status = 1;
 		}
 		new_var(env, *args);
